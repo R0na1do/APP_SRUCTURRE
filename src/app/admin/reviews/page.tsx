@@ -80,7 +80,7 @@ export default function ReviewsPage() {
         console.error('Error loading reviews:', error)
         showToast('Failed to load reviews', 'error')
       } else {
-        const formattedReviews = data?.map(review => ({
+        const formattedReviews = data?.map((review: any) => ({
           ...review,
           user_name: review.users?.user_metadata?.first_name || review.users?.email || 'Unknown User',
           user_email: review.users?.email || 'Unknown Email',

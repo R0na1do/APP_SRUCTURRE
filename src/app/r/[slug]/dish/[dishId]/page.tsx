@@ -195,7 +195,7 @@ export default function DishPage({ params }: { params: { slug: string, dishId: s
                     {Object.entries(dish.nutrition_info).map(([key, value]) => (
                       <div key={key} className="n">
                         <div className="label">{key.replace('_', ' ').toUpperCase()}</div>
-                        <div className="val">{value}</div>
+                        <div className="val">{String(value)}</div>
                       </div>
                     ))}
                   </div>

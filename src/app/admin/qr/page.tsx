@@ -43,7 +43,7 @@ export default function QRCodePage() {
       ]
       
       const userIsAdmin = user?.email && superAdminEmails.includes(user.email)
-      setIsAdmin(userIsAdmin)
+      setIsAdmin(!!userIsAdmin)
 
       if (userIsAdmin) {
         // Admin view: Load all restaurants from localStorage or Supabase

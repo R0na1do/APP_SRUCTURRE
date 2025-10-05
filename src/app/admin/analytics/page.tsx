@@ -64,7 +64,7 @@ export default function AnalyticsPage() {
         return
       }
 
-      const restaurantIds = restaurants.map(r => r.id)
+      const restaurantIds = restaurants.map((r: any) => r.id)
 
       // Calculate date range
       const days = selectedPeriod === '7d' ? 7 : selectedPeriod === '30d' ? 30 : 90
@@ -99,11 +99,11 @@ export default function AnalyticsPage() {
       // Calculate analytics
       const totalViews = viewsData?.length || 0
       const totalOrders = ordersData?.length || 0
-      const totalRevenue = ordersData?.reduce((sum, order) => sum + (order.total_cents || 0), 0) || 0
+      const totalRevenue = ordersData?.reduce((sum: number, order: any) => sum + (order.total_cents || 0), 0) || 0
 
       // Popular items
       const itemCounts: { [key: string]: { name: string; count: number; revenue: number } } = {}
-      ordersData?.forEach(order => {
+      ordersData?.forEach((order: any) => {
         order.order_items?.forEach((item: any) => {
           const itemName = item.menu_items?.name || 'Unknown Item'
           if (!itemCounts[itemName]) {
@@ -117,6 +117,7 @@ export default function AnalyticsPage() {
       const popularItems = Object.values(itemCounts)
         .sort((a, b) => b.count - a.count)
         .slice(0, 5)
+        .map(item => ({ name: item.name, order_count: item.count, revenue: item.revenue }))
 
       // Daily data (simplified)
       const dailyViews = Array.from({ length: days }, (_, i) => {
@@ -139,14 +140,14 @@ export default function AnalyticsPage() {
       })
 
       // Restaurant stats
-      const restaurantStats = restaurants.map(restaurant => {
-        const restaurantViews = viewsData?.filter(v => v.restaurant_id === restaurant.id).length || 0
-        const restaurantOrders = ordersData?.filter(o => o.restaurant_id === restaurant.id).length || 0
-        const restaurantRevenue = ordersData?.filter(o => o.restaurant_id === restaurant.id)
-          .reduce((sum, order) => sum + (order.total_cents || 0), 0) || 0
-        const restaurantReviews = reviewsData?.filter(r => r.restaurant_id === restaurant.id) || []
+      const restaurantStats = restaurants.map((restaurant: any) => {
+        const restaurantViews = viewsData?.filter((v: any) => v.restaurant_id === restaurant.id).length || 0
+        const restaurantOrders = ordersData?.filter((o: any) => o.restaurant_id === restaurant.id).length || 0
+        const restaurantRevenue = ordersData?.filter((o: any) => o.restaurant_id === restaurant.id)
+          .reduce((sum: number, order: any) => sum + (order.total_cents || 0), 0) || 0
+        const restaurantReviews = reviewsData?.filter((r: any) => r.restaurant_id === restaurant.id) || []
         const avgRating = restaurantReviews.length > 0 
-          ? restaurantReviews.reduce((sum, r) => sum + r.rating, 0) / restaurantReviews.length 
+          ? restaurantReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / restaurantReviews.length 
           : 0
 
         return {
@@ -323,7 +324,7 @@ export default function AnalyticsPage() {
                         <div className="item-info">
                           <div className="item-name">{item.name}</div>
                           <div className="item-stats">
-                            {item.count} orders • {formatCurrency(item.revenue)}
+                            {item.order_count} orders • {formatCurrency(item.revenue)}
                           </div>
                         </div>
                       </div>
