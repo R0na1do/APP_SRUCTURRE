@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabaseBrowser } from '@/lib/supabase-browser'
 import Price from '@/components/Price'
-import '../dish.css'
+import '../../dish.css'
 
 interface DishForm {
   name: string
